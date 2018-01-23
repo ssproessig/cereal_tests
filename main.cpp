@@ -1,4 +1,5 @@
 #include <QDateTime>
+#include <QTemporaryDir>
 
 #include <fstream>
 #include <iostream>
@@ -66,7 +67,7 @@ void dumpDataStruct(DataStruct const& data)
 
 
 
-void write(const char* aFileName)
+void write(std::string const& aFileName)
 {
     DataStruct data;
     data.dateTime = QDateTime::currentDateTime();
@@ -90,7 +91,7 @@ void write(const char* aFileName)
 
 
 
-void read(const char* aFileName)
+void read(std::string const& aFileName)
 {
     std::ifstream os(aFileName, std::ios::binary);
     cereal::JSONInputArchive archive(os);
@@ -106,7 +107,11 @@ void read(const char* aFileName)
 
 int main()
 {
-    auto const fileName = "E:/x.json";
-    write(fileName);
-    read(fileName);
+    QTemporaryDir dir;
+
+    if (dir.isValid()) {
+        auto const fileName = dir.path().toStdString() + "/x.json";
+        write(fileName);
+        read(fileName);
+    }
 }
