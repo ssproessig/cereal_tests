@@ -11,6 +11,7 @@ find_package(Qt5 5.8 COMPONENTS Core REQUIRED)
 add_executable(
     ${P_NAME}
     main.cpp
+    README.md
 )
 target_include_directories(
     ${P_NAME} PUBLIC
