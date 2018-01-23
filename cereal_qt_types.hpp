@@ -18,4 +18,21 @@ namespace cereal
         aDateTime = QDateTime::fromSecsSinceEpoch(aValue, Qt::UTC);
     }
     /// @}
+
+
+    /// @name QColor serialization
+    /// @{
+    template <class Archive> inline
+    std::string save_minimal(Archive const&, QColor const& aColor)
+    {
+        return aColor.name().toStdString();
+    }
+
+    template <class Archive> inline
+    void load_minimal(Archive const&, QColor& aColor, std::string const& aValue)
+    {
+        aColor.setNamedColor(QString::fromStdString(aValue));
+    }
+    /// @}
+
 }

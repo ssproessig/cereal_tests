@@ -1,3 +1,4 @@
+#include <QColor>
 #include <QDateTime>
 #include <QTemporaryDir>
 
@@ -30,6 +31,7 @@ struct Point
 
 struct DataStruct
 {
+    QColor color;
     QDateTime dateTime;
     uint16_t x = 0;
     int32_t y = 0;
@@ -40,6 +42,7 @@ struct DataStruct
     template <class Archive> void serialize(Archive & anArchive)
     {
         anArchive(
+            CEREAL_NVP(color),
             CEREAL_NVP(dateTime),
             CEREAL_NVP(x), CEREAL_NVP(y),
             CEREAL_NVP(z),
@@ -52,6 +55,7 @@ struct DataStruct
 
 void dumpDataStruct(DataStruct const& data)
 {
+    std::cout << " color:       " << qPrintable(data.color.name()) << std::endl;
     std::cout << " dateTime:    " << qPrintable(data.dateTime.toString()) << std::endl;
     std::cout << " x:           " << data.x << std::endl;
     std::cout << " y:           " << data.y << std::endl;
