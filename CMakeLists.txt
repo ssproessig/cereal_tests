@@ -5,6 +5,8 @@ set(P_NAME test_cereal)
 project(${P_NAME})
 set(CMAKE_CXX_STANDARD 14)
 
+find_package(Qt5 COMPONENTS Core REQUIRED)
+
 
 add_executable(
     ${P_NAME}
@@ -17,4 +19,5 @@ target_include_directories(
 )
 target_link_libraries(
     ${P_NAME}
+    Qt5::Core
 )
