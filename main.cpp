@@ -78,11 +78,14 @@ void write(const char* aFileName)
         {1, 1}, {2, 2}
     };
 
+    dumpDataStruct(data);
+
     std::ofstream os(aFileName, std::ios::binary);
     cereal::JSONOutputArchive archive(os);
     archive(cereal::make_nvp("DataStruct", data));
 
     std::cout << "Wrote: " << aFileName << std::endl;
+    std::cout << "----------" << std::endl;
 }
 
 
