@@ -49,6 +49,23 @@ struct DataStruct
 
 
 
+void dumpDataStruct(DataStruct const& data)
+{
+    std::cout << " dateTime:    " << qPrintable(data.dateTime.toString()) << std::endl;
+    std::cout << " x:           " << data.x << std::endl;
+    std::cout << " y:           " << data.y << std::endl;
+    std::cout << " z:           " << data.z << std::endl;
+    std::cout << " pointCloud:  " << data.pointCloud.size() << " points " << std::endl;
+
+    for(auto const& p : data.pointCloud)
+    {
+        std::cout << "      x:      " << p.x << std::endl;
+        std::cout << "      y:      " << p.y << std::endl;
+    }
+}
+
+
+
 void write(const char* aFileName)
 {
     DataStruct data;
@@ -79,18 +96,7 @@ void read(const char* aFileName)
     archive(cereal::make_nvp("DataStruct", data));
 
     std::cout << "Read: " << aFileName << std::endl;
-
-    std::cout << " dateTime:    " << qPrintable(data.dateTime.toString())   << std::endl;
-    std::cout << " x:           " << data.x                                 << std::endl;
-    std::cout << " y:           " << data.y                                 << std::endl;
-    std::cout << " z:           " << data.z                                 << std::endl;
-    std::cout << " pointCloud:  " << data.pointCloud.size() << " points "   << std::endl;
-
-    for(auto const& p : data.pointCloud)
-    {
-        std::cout << "      x:      " << p.x << std::endl;
-        std::cout << "      y:      " << p.y << std::endl;
-    }
+    dumpDataStruct(data);
 }
 
 
