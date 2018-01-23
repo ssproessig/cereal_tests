@@ -5,7 +5,7 @@ set(P_NAME test_cereal)
 project(${P_NAME})
 set(CMAKE_CXX_STANDARD 14)
 
-find_package(Qt5 5.8 COMPONENTS Core REQUIRED)
+find_package(Qt5 5.8 COMPONENTS Core Gui Widgets REQUIRED)
 
 
 add_executable(
@@ -19,5 +19,5 @@ target_include_directories(
 )
 target_link_libraries(
     ${P_NAME}
-    Qt5::Core
+    Qt5::Core Qt5::Gui Qt5::Widgets
 )
