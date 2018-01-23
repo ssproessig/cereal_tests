@@ -3,10 +3,28 @@
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <vector>
 
 #include "cereal/archives/json.hpp"
+#include <cereal/types/vector.hpp>
 #include "cereal_qt_types.hpp"
 
+
+
+struct Point
+{
+    Point() = default;
+
+    int x = 0;
+    int y = 0;
+
+    template <class Archive> void serialize(Archive & anArchive)
+    {
+        anArchive(
+            CEREAL_NVP(x), CEREAL_NVP(y)
+        );
+    }
+};
 
 
 struct DataStruct
@@ -16,12 +34,15 @@ struct DataStruct
     int32_t y = 0;
     std::string z;
 
+    std::vector<Point> pointCloud;
+
     template <class Archive> void serialize(Archive & anArchive)
     {
         anArchive(
             CEREAL_NVP(dateTime),
             CEREAL_NVP(x), CEREAL_NVP(y),
-            CEREAL_NVP(z)
+            CEREAL_NVP(z),
+            CEREAL_NVP(pointCloud)
         );
     }
 };
@@ -35,6 +56,10 @@ void write(const char* aFileName)
     data.x = 12345;
     data.y = -123456789;
     data.z = "sample string";
+    data.pointCloud =
+    {
+        {1, 1}, {2, 2}
+    };
 
     std::ofstream os(aFileName, std::ios::binary);
     cereal::JSONOutputArchive archive(os);
@@ -59,6 +84,13 @@ void read(const char* aFileName)
     std::cout << " x:           " << data.x                                 << std::endl;
     std::cout << " y:           " << data.y                                 << std::endl;
     std::cout << " z:           " << data.z                                 << std::endl;
+    std::cout << " pointCloud:  " << data.pointCloud.size() << " points "   << std::endl;
+
+    for(auto const& p : data.pointCloud)
+    {
+        std::cout << "      x:      " << p.x << std::endl;
+        std::cout << "      y:      " << p.y << std::endl;
+    }
 }
 
 
