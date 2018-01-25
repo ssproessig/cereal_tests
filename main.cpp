@@ -15,6 +15,7 @@
 struct Point
 {
     Point() = default;
+    Point(int const aX, int const aY): x(aX), y(aY) {}
 
     int x = 0;
     int y = 0;
@@ -74,10 +75,7 @@ void write(std::string const& aFileName)
     data.x = 12345;
     data.y = -123456789;
     data.z = "sample string";
-    data.pointCloud =
-    {
-        {1, 1}, {2, 2}
-    };
+    data.pointCloud = { Point{1, 1},  Point{2, 2} };
 
     dumpDataStruct(data);
 
