@@ -18,4 +18,19 @@ namespace cereal
         aDateTime = QDateTime::fromSecsSinceEpoch(aValue, Qt::UTC);
     }
     /// @}
+
+    /// @name QString serialization
+    /// @{
+    template <class Archive>
+    std::string save_minimal(Archive const&, QString const& aString)
+    {
+        return aString.toUtf8().toStdString();
+    }
+
+    template <class Archive>
+    void load_minimal(Archive const&, QString& aString, std::string const& aValue)
+    {
+        aString = QString::fromUtf8(aValue.c_str());
+    }
+    /// @}
 }

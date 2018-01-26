@@ -1,5 +1,6 @@
 #include <QDateTime>
 #include <QTemporaryDir>
+#include <QString>
 
 #include <fstream>
 #include <iostream>
@@ -32,6 +33,7 @@ struct Point
 struct DataStruct
 {
     QDateTime dateTime;
+    QString text;
     uint16_t x = 0;
     int32_t y = 0;
     std::string z;
@@ -42,6 +44,7 @@ struct DataStruct
     {
         anArchive(
             CEREAL_NVP(dateTime),
+            CEREAL_NVP(text),
             CEREAL_NVP(x), CEREAL_NVP(y),
             CEREAL_NVP(z),
             CEREAL_NVP(pointCloud)
@@ -54,6 +57,7 @@ struct DataStruct
 void dumpDataStruct(DataStruct const& data)
 {
     std::cout << " dateTime:    " << qPrintable(data.dateTime.toString()) << std::endl;
+    std::cout << " text    :    " << qPrintable(data.text) << std::endl;
     std::cout << " x:           " << data.x << std::endl;
     std::cout << " y:           " << data.y << std::endl;
     std::cout << " z:           " << data.z << std::endl;
@@ -72,6 +76,7 @@ void write(std::string const& aFileName)
 {
     DataStruct data;
     data.dateTime = QDateTime::currentDateTime();
+    data.text = QString::fromUtf8(QByteArrayLiteral("\xD7\xA9\xD7\x9C\xD7\x95\xD7\x9D"));
     data.x = 12345;
     data.y = -123456789;
     data.z = "sample string";
